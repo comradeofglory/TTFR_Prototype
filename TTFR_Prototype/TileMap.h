@@ -38,6 +38,6 @@ public:
 	TileMap();
 
 	void init(std::string LevelFile);
-	;
+	
 	Vector2i collide(Vector2i ch_position, Vector2i ch_size, Vector2i ch_velocity, short int ch_collision);
 };

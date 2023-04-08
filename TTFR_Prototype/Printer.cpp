@@ -5,6 +5,7 @@ Printer::Printer(RenderWindow* _window, Level* _level) {
 	window = _window;
 	level = _level;
 }
+
 void Printer::draw() {
 	window->clear(Color::Black);
 	//TODO interface

@@ -7,6 +7,7 @@ void Tile::init(Vector2i start_tile_position, Vector2i start_size, short int _co
 	position.y = tile_position.y * size.y;
 	collision = _collision;
 	animation_num = _animation_num;
+	animation_count = 0;
 	text = _texture;
 }
 
