@@ -5,33 +5,39 @@ using namespace sf;
 class TileMap
 {
 private:
+	int index_search(int index);
+
+public:
 	struct tiles
 	{
 		Vector2i size;
 		Vector2i position;
 		Vector2i t_position;
-		
-		int collision;
-		//TODO:	
-		//animation
 		Sprite sprite;
+		
+		//TODO:
+		//animation
+
 		int tile_type;
 	};
 
 	struct tile_type {
 		int type;
-		Texture texture;
+		int collision;
+		Texture* texture;
 	};
 
-public:
-	Vector2i size;
-	int tile_type_number;
+	Vector2i size{0 ,0};
+	int tile_type_number = 0;
 
-	tiles* tile = new tiles[size.x*size.y];
-	tile_type* type = new tile_type[tile_type_number];
+	tiles* tile = NULL;
+	tile_type* type = NULL;
 
 
-	void init(); 
-	//Vector2i collide(Vector2i ch_position, Vector2i ch_size, Vector2i ch_velocity, short int ch_collision); //Принимает позицию и скорость юнита, возвращает скорость юнита с учетом коллизии
+
+	TileMap();
+
+	void init(std::string LevelFile);
+	;
+	Vector2i collide(Vector2i ch_position, Vector2i ch_size, Vector2i ch_velocity, short int ch_collision);
 };
-
