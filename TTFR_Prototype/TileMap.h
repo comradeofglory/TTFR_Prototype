@@ -5,7 +5,7 @@ using namespace sf;
 class TileMap
 {
 private:
-	
+	int index_search(int index);
 
 public:
 	struct tiles
@@ -22,6 +22,7 @@ public:
 	};
 
 	struct tile_type {
+		int type;
 		int collision;
 		Texture* texture;
 	};
@@ -37,5 +38,6 @@ public:
 	TileMap();
 
 	void init(std::string LevelFile);
+	;
 	Vector2i collide(Vector2i ch_position, Vector2i ch_size, Vector2i ch_velocity, short int ch_collision);
 };

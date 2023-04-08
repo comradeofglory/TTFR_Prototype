@@ -29,6 +29,18 @@ std::vector<std::string> split(std::string s, char c = ' ') {
     return res;
 }
 
+int TileMap::index_search(int index) {
+    int res = -1;
+    if (type) {
+        for (int i = 0; i < tile_type_number; i++) {
+            if (index == type[i].type) {
+                res = i;
+            }
+        }
+    }
+    return res;
+}
+
 /*подгружает текстуры в оперативную память вместе с коллизиями
     curr_text - текующий инициализируемый тип
     type - тип, по которму осуществляем поиск в словаре
@@ -92,8 +104,8 @@ void TileMap::init(std::string LevelFile) {
         for (int j = 0; j < size.x; j++) {
             load_f >> tile[j + i * size.y].tile_type;
             tile[j + i * size.y].t_position = Vector2i{j, i};
-            tile[j + i * size.y].size = Vector2i{64, 64};
-            tile[j + i * size.y].sprite.setTexture();
+            tile[j + i * size.y].size = Vector2i{64, 64};                                                   //texture initialised by first texture in list
+            tile[j + i * size.y].sprite.setTexture(type[index_search(tile[j + i * size.y].tile_type)].texture[0]);
         }
     }
 
