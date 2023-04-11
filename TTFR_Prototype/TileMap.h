@@ -14,6 +14,7 @@ public:
 		Vector2i position;
 		Vector2i t_position;
 		Sprite sprite;
+		int collision;
 		
 		//TODO:
 		//animation
@@ -33,11 +34,12 @@ public:
 	tiles* tile = NULL;
 	tile_type* type = NULL;
 
-
-
 	TileMap();
 
 	void init(std::string LevelFile);
-	
-	Vector2i collide(Vector2i ch_position, Vector2i ch_size, Vector2i ch_velocity, short int ch_collision);
+
+	Vector2f collide(Vector2f char_position, Vector2f char_size, Vector2f char_velocity, short int char_collision);
+
+	Vector2i get_TM_position(Vector2f abs_position);
+	int get_tile_collision(Vector2i TM_position);
 };
