@@ -8,12 +8,11 @@ class Character
 private:
 	//short int HP;
 public:
-	Vector2f position, size;
+	Vector2f position, size, center;
 	Vector2f velocity, control_velocity;
 	RectangleShape sprite;
 	Texture texture;
-	short int collision;
-
+	short int collision;  
 
 	//debug
 	Font font;

@@ -27,6 +27,7 @@ void Character::move(TileMap tile_map) {
 	velocity = tile_map.collide(position, size, velocity, collision);
 	position += velocity;
 	sprite.setPosition(position);
+	center = { position.x + size.x / 2, position.y + size.y / 2 };
 	//debug
 	debug = "position: x " + std::to_string(position.x) + " y " + std::to_string(position.y)
 		+ "\nvelocity: x " + std::to_string(velocity.x) + " y " + std::to_string(velocity.y)

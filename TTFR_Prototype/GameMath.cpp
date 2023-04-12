@@ -7,3 +7,7 @@ Vector2f GameMath::Normalised(Vector2f vector) {
 	}
 	return { vector.x / mod, vector.y / mod };
 }
+
+float GameMath::Length(Vector2f vector) {
+	return sqrt(vector.x * vector.x + vector.y * vector.y);
+}

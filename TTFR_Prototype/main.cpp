@@ -10,7 +10,12 @@ int main()
     Level level;
     level.init("LevelInfo/TestLevel.txt");
     GameMath math;
-
+    
+    //реализация камеры
+    View camera;
+    Vector2f default_size = { 1280.f, 720.f };
+    camera.setSize(default_size);
+    
 
     Printer printer(&window, &level);
     
@@ -46,6 +51,14 @@ int main()
 
         level.input(math.Normalised((Vector2f)CD));
         level.logic();
+        camera.setCenter(level.player.center);
+        if (math.Length(level.player.velocity) != 0 && camera.getSize() == default_size) {
+            camera.zoom(1 + (math.Length(level.player.velocity) / 100));
+        }
+        else if (math.Length(level.player.velocity) == 0) {
+            camera.setSize(default_size);
+        }
+        window.setView(camera);
         printer.draw();
         sleep(milliseconds(10));
     }
