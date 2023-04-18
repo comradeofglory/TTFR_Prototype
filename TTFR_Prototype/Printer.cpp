@@ -12,8 +12,7 @@ void Printer::draw() {
 	for (int i = 0; i < level->tile_map.size.x * level->tile_map.size.y; i++) {
 		window->draw(level->tile_map.tile[i].sprite);
 	}
-	window->draw(level->player.sprite);
-	//debug
-	window->draw(level->player.text);
+	window->draw(level->player.shape);
+	window->draw(level->b.shape);
 	window->display();
 }

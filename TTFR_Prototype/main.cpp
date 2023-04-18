@@ -51,11 +51,11 @@ int main()
 
         level.input(math.Normalised((Vector2f)CD));
         level.logic();
-        camera.setCenter(level.player.center);
-        if (math.Length(level.player.velocity) != 0 && camera.getSize() == default_size) {
-            camera.zoom(1 + (math.Length(level.player.velocity) / 100));
+        camera.setCenter(level.player.body.position);
+        if (math.Length(level.player.body.velocity) != 0) {
+            camera.setSize(default_size * (1 + math.Length(level.player.body.velocity) / 50));
         }
-        else if (math.Length(level.player.velocity) == 0) {
+        else if (math.Length(level.player.body.velocity) == 0) {
             camera.setSize(default_size);
         }
         window.setView(camera);
