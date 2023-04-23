@@ -149,30 +149,48 @@ int TileMap::get_tile_collision(Vector2i TM_position) {
 
 Vector2f TileMap::collide(Vector2f char_position, Vector2f char_size, Vector2f char_velocity, short int char_collision) {
     Vector2f res_velocity = char_velocity;
-    Vector2f dot[4];
-    Vector2f new_dot[4][2];
-    dot[0] = char_position;
-    dot[1] = char_position;
-    dot[1].x += char_size.x;
-    dot[2] = char_position;
-    dot[2].y += char_size.y;
-    dot[3] = char_position;
-    dot[3] += char_size;
 
-    for (int i = 0; i < 4; i++) {
-        new_dot[i][0] = dot[i];
-        new_dot[i][0].x += char_velocity.x;
-        new_dot[i][1] = dot[i];
-        new_dot[i][1].y += char_velocity.y;
+    std::vector<Vector2f> dots;
+    
+    //в определении числа точек на границе тела исходил из того, что все тайлы равны по размеру, при том квадратные
+    //это позволило просто поделить на ширину первого тайла
+    int dots_on_x = ceil(char_size.x / (tile[0].size.x - 1));
+    float x_delta = char_size.x / dots_on_x;
+    int dots_on_y = ceil(char_size.y / (tile[0].size.y - 1));
+    float y_delta = char_size.y / dots_on_y;
+
+    for (int i = 0; i < dots_on_x; i++) {
+        dots.push_back(Vector2f{ char_position.x + x_delta * i, char_position.y });
+    }
+
+    for (int i = 0; i < dots_on_y; i++) {
+        dots.push_back(Vector2f{ char_position.x + char_size.x, char_position.y + y_delta*i});
+    }
+
+    for (int i = 0; i < dots_on_x; i++) {
+        dots.push_back(Vector2f{ char_position.x + char_size.x - x_delta * i, char_position.y + char_size.y});
+    }
+
+    for (int i = 0; i < dots_on_x; i++) {
+        dots.push_back(Vector2f{ char_position.x, char_position.y + char_size.y - y_delta*i});
+    }
+
+
+    Vector2f new_dot[2];
+    for (int i = 0; i < dots.size(); i++) {
+        new_dot[0] = dots[i];
+        new_dot[0].x += char_velocity.x;
+        new_dot[1] = dots[i];
+        new_dot[1].y += char_velocity.y;
 
         //TODO: ѕровер€ть только те точки, которые необход
 
-        if (char_collision <= get_tile_collision(get_TM_position(new_dot[i][0]))) {
+        if (char_collision <= get_tile_collision(get_TM_position(new_dot[0]))) {
             res_velocity.x = 0;
             //интерпол€ци€
-            res_velocity.x = (float)get_TM_position(new_dot[i][0]).x * tile[0].size.x - dot[i].x;
+            res_velocity.x = (float)get_TM_position(new_dot[0]).x * tile[0].size.x - dots[i].x;
            
-            if (dot[i].x > (float)get_TM_position(new_dot[i][0]).x * tile[0].size.x) {
+            if (dots[i].x > (float)get_TM_position(new_dot[0]).x * tile[0].size.x) {
                 res_velocity.x += tile[0].size.x;
             }
             
@@ -183,12 +201,12 @@ Vector2f TileMap::collide(Vector2f char_position, Vector2f char_size, Vector2f c
                 res_velocity.x += 0.1;
             }
         }
-        if (char_collision <= get_tile_collision(get_TM_position(new_dot[i][1]))) {
+        if (char_collision <= get_tile_collision(get_TM_position(new_dot[1]))) {
             res_velocity.y = 0;
             //интерпол€ци€
-            res_velocity.y = (float)get_TM_position(new_dot[i][0]).y * tile[0].size.y - dot[i].y;
+            res_velocity.y = (float)get_TM_position(new_dot[0]).y * tile[0].size.y - dots[i].y;
 
-            if (dot[i].y > ((float)get_TM_position(new_dot[i][0]).y + 0.5) * tile[0].size.y) {
+            if (dots[i].y > ((float)get_TM_position(new_dot[0]).y + 0.5) * tile[0].size.y) {
                 res_velocity.y += tile[0].size.y;
             }
 
