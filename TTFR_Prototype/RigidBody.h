@@ -1,13 +1,13 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "TileMap.h"
-#include "GameMath.h"
+#include "GMath.h"
+
 using namespace sf;
 
 class RigidBody
 {
 private:
-	GameMath math;
 	float mass, friction;
 	int collision;
 public:
@@ -16,6 +16,6 @@ public:
 	void set_velocity(Vector2f _velocity);
 	void set_acceleration(Vector2f _acceleration);
 	Vector2f collide(Vector2f obj_size, Vector2f obj_position, Vector2f obj_speed, int obj_collision);
-	void move(TileMap* TM /*Obj...*/);
+	void move(TileMap* TM, Level *level/*, std::vector<Character> *entities*/ /*barriers, objects*/);
 };
 

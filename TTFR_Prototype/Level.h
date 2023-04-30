@@ -1,26 +1,26 @@
 #pragma once
+#include <vector>
 #include "TileMap.h"
-#include "CharacterMaster.h"
 #include "Barrier.h"
-#include "GameMath.h"
+#include "Character.h"
 
 class Level
 {
 private:
+
 public:
 	TileMap tile_map;
-	//CharacterMaster character_master;
 	Character player;
-	GameMath math;
+	std::vector<Character> enemies;
 	Barrier b;
 
+	void init(std::string tile_map_file);
 
 	void input(Vector2f direction) {
 		player.body.set_acceleration(direction);
 	}
-	void logic() {
-		player.body.move(&tile_map);
-		player.shape.setPosition(player.body.position);
-	}
-	void init(std::string tile_map_file);
+
+	void logic();
+
+	
 };

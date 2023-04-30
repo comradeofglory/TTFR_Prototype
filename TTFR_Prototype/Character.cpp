@@ -8,3 +8,8 @@ void Character::init(Vector2f position, Vector2f size) {
 	shape.setPosition(position);
 	shape.setSize(size);
 }
+
+void Character::move(TileMap* tile_map, Level* level/*, std::vector<Character> *entities)*/) {
+	body.move(tile_map, level /*entities*/);
+	shape.setPosition(body.position);
+}

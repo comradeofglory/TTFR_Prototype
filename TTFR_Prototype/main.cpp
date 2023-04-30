@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "Printer.h"
-#include "GameMath.h"
+#include "GMath.h"
 using namespace sf;
 
 int main()
@@ -9,7 +9,6 @@ int main()
     window.setVerticalSyncEnabled(true);
     Level level;
     level.init("LevelInfo/TestLevel.txt");
-    GameMath math;
     
     //реализация камеры
     View camera;
@@ -39,6 +38,7 @@ int main()
         else {
             CD.y = 0;
         }
+
         if (Keyboard::isKeyPressed(Keyboard::Right)) {
             CD.x = 1;
         }
@@ -49,13 +49,13 @@ int main()
             CD.x = 0;
         }
 
-        level.input(math.Normalised((Vector2f)CD));
+        level.input(Normalised((Vector2f)CD));
         level.logic();
         camera.setCenter(level.player.body.position);
-        if (math.Length(level.player.body.velocity) != 0) {
-            camera.setSize(default_size * (1 + math.Length(level.player.body.velocity) / 50));
+        if (Length(level.player.body.velocity) != 0) {
+            camera.setSize(default_size * (1 + Length(level.player.body.velocity) / 50));
         }
-        else if (math.Length(level.player.body.velocity) == 0) {
+        else if (Length(level.player.body.velocity) == 0) {
             camera.setSize(default_size);
         }
         window.setView(camera);

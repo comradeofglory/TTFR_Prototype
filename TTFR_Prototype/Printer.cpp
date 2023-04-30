@@ -14,5 +14,8 @@ void Printer::draw() {
 	}
 	window->draw(level->player.shape);
 	window->draw(level->b.shape);
+	for (auto i : level->enemies) {
+		window->draw(i.shape);
+	}
 	window->display();
 }

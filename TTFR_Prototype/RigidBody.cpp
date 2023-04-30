@@ -17,6 +17,8 @@ void RigidBody::set_acceleration(Vector2f _acceleration) {
 	acceleration = _acceleration;
 }
 
+//В качестве аргумента получет объект, с которым проверяется коллизия
+//Возвращает скорость аргумента	
 Vector2f RigidBody::collide(Vector2f obj_size, Vector2f obj_position, Vector2f obj_speed, int obj_collision) {
 	Vector2f res_velocity = obj_speed;
 
@@ -56,15 +58,21 @@ Vector2f RigidBody::collide(Vector2f obj_size, Vector2f obj_position, Vector2f o
 	return res_velocity;
 }
 
-void RigidBody::move(TileMap* TM) {
+
+void RigidBody::move(TileMap* TM, Level *level) {
 	//Todo init:
 	float vmax = 10;
 
 	velocity -= velocity * friction;
-	if (math.Length(velocity) < vmax) {
+	if (Length(velocity) < vmax) {
 		velocity += acceleration / mass;
 	}
+
 	velocity = TM->collide(position, size, velocity, collision);
+	for (Character* i : level->enemies) {
+		velocity = (*i).body.collide(size, position, velocity, collision);
+	}
+
 	//TODO:: other objects;
 
 	position += velocity;
