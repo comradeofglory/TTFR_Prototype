@@ -1,9 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "RigidBody.h"
-using namespace sf;
 
-class Level;
+using namespace sf;
 
 class Character
 {
@@ -14,6 +13,6 @@ public:
 	Character() {};
 	~Character() {};
 
-	void init(Vector2f position, Vector2f size);
-	void move(TileMap* tile_map, Level *level/*, std::vector<Character> *entities*/);
+	void init(Vector2f position, Vector2f size, int coll);
+	void move(TileMap* tile_map, std::vector<RigidBody*> chars_rbodies);
 };

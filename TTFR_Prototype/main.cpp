@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "Printer.h"
 #include "GMath.h"
+#include <string>
 using namespace sf;
 
 int main()
@@ -59,7 +60,17 @@ int main()
             camera.setSize(default_size);
         }
         window.setView(camera);
+        
+        Text txt;
+        Font font;
+        bool b = font.loadFromFile("Fonts\\ARIAL.TTF");
+        txt.setFont(font);
+        txt.setString(std::to_string(level.player.body.velocity.x));
+        txt.setPosition(500, 600);
+        window.draw(txt);
+
         printer.draw();
+
         sleep(milliseconds(10));
     }
     return 0;

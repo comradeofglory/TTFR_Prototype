@@ -15,7 +15,7 @@ public:
 	void init(Vector2f _position, Vector2f _size, float _mass, float _friction, int _collision);
 	void set_velocity(Vector2f _velocity);
 	void set_acceleration(Vector2f _acceleration);
-	Vector2f collide(Vector2f obj_size, Vector2f obj_position, Vector2f obj_speed, int obj_collision);
-	void move(TileMap* TM, Level *level/*, std::vector<Character> *entities*/ /*barriers, objects*/);
-};
 
+	bool collide(RigidBody* other_rb);
+	void move(TileMap* TM, std::vector<RigidBody*> chars_params);
+};

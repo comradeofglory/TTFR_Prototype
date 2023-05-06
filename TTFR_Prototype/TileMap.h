@@ -25,6 +25,7 @@ public:
 	struct tile_type {
 		int type;
 		int collision;
+		//динамический массив, надо потом чистить
 		Texture* texture;
 	};
 
