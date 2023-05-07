@@ -41,6 +41,8 @@ int TileMap::index_search(int index) {
     return res;
 }
 
+
+
 /*подгружает текстуры в оперативную память вместе с коллизиями
     curr_text - текующий инициализируемый тип
     type - тип, по которму осуществляем поиск в словаре
@@ -107,14 +109,48 @@ void TileMap::init(std::string LevelFile) {
             load_f >> tile[j + i * size.x].tile_type;
             tile[j + i * size.x].t_position = Vector2i{ j, i };
             tile[j + i * size.x].collision = type[index_search(tile[j + i * size.x].tile_type)].collision;
-            tile[j + i * size.x].size = Vector2i{64, 64};                                                   //texture initialised by first texture in list
-            tile[j + i * size.x].sprite.setTexture(type[index_search(tile[j + i * size.x].tile_type)].texture[0]);
+            tile[j + i * size.x].size = Vector2i{8, 8};                                                   //texture initialised by first texture in list
+            //tile[j + i * size.x].sprite.setTexture(type[index_search(tile[j + i * size.x].tile_type)].texture[0]);
             tile[j + i * size.x].sprite.setPosition({(float) j * tile[j + i * size.x].size.x,(float) i * tile[j + i * size.x].size.y});
         }
     }
-    for (int i = 0; i < size.x * size.y; i++) {
-        tile[i] = tile[i];
+    /*
+Компоновка стен:
+ggg
+w0w   
+ggg   
+
+gwg ggg gwg
+g1g g2g g3g
+gwg gwg ggg
+
+компоновка полов:
+rand%4
+*/
+
+    for (int i = 0; i < size.y; i++) {
+        for (int j = 0; j < size.x; j++) {
+            int t = 0;
+            if (tile[j + i * size.x].tile_type == 1) {
+                t = rand() % 4;
+            }
+            if (tile[j + i * size.x].tile_type == 2) {
+                if (i < size.y && tile[j + (i + 1) * size.x].tile_type == 2) {
+                    t = 2;
+                }
+                if (i > 0 && tile[j + (i - 1) * size.x].tile_type == 2) {
+                    if (t == 2) {
+                        t = 1;
+                    }
+                    else {
+                        t = 3;
+                    }
+                }
+            }
+            tile[j + i * size.x].sprite.setTexture(type[index_search(tile[j + i * size.x].tile_type)].texture[t]);
+        }
     }
+    
 }
 
 TileMap::TileMap() {

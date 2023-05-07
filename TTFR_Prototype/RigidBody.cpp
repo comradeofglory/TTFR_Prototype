@@ -58,7 +58,7 @@ Vector2f RigidBody::collide(Vector2f obj_size, Vector2f obj_position, Vector2f o
 
 void RigidBody::move(TileMap* TM) {
 	//Todo init:
-	float vmax = 10;
+	float vmax = 1.25;
 
 	velocity -= velocity * friction;
 	if (math.Length(velocity) < vmax) {

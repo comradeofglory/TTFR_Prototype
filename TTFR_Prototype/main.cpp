@@ -13,7 +13,7 @@ int main()
     
     //реализация камеры
     View camera;
-    Vector2f default_size = { 1280.f, 720.f };
+    Vector2f default_size = { 160.f, 90.f };
     camera.setSize(default_size);
     
 
